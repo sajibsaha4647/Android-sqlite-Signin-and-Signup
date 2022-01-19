@@ -1,4 +1,4 @@
-package com.example.sqlitesignin.Activity;
+package com.example.sqlitesignin.Activity.AllActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

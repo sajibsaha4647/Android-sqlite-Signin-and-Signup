@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="10dp"
-    tools:context=".Activity.MainActivity">
+    tools:context=".Activity.AllActivity.MainActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -42,6 +42,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="login"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        />
+    <Button
+        android:id="@+id/Signupgo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Signup"
         />
 
 </LinearLayout>
