@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.sqlitesignin.Activity.Utils.DatabaseHelper;
 import com.example.sqlitesignin.R;
@@ -62,6 +63,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view.getId() == R.id.Signupgo){
             Intent intent = new Intent(MainActivity.this, Signup.class);
             startActivity(intent);
+        }else if(view.getId() == R.id.loginbtn){
+
+            Boolean result = databaseHelper.FindPassword( email,Password);
+
+            if(email.equals("") || Password.equals("")){
+                Toast.makeText(this,"All field is required",Toast.LENGTH_LONG).show();
+            }else{
+                if(result == true){
+                    Intent intent = new Intent(MainActivity.this,Home.class);
+                    startActivity(intent);
+                    Toast.makeText(this,"SuccessFully login",Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(this,"Email or password did not match !",Toast.LENGTH_LONG).show();
+                }
+            }
+
+
         }
 
     }

@@ -2,6 +2,7 @@ package com.example.sqlitesignin.Activity.Utils;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -55,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public long InsertsignupDetails (User_Details user_details){
+    public long InsertsignupDetails (User_Details user_details){ //singput in database
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(NAME,user_details.getName());
@@ -65,5 +66,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long rowId =  sqLiteDatabase.insert(TABLE_NAME,null,contentValues);
 
         return rowId;
+    }
+
+
+
+    public boolean IsEmailExist(String value) {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        String sql = "SELECT EXISTS (SELECT * FROM "+TABLE_NAME+" WHERE "+EMAIL+"='"+value+"' LIMIT 1)";
+        Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
+        cursor.moveToFirst();
+
+        // cursor.getInt(0) is 1 if column with value exists
+        if (cursor.getInt(0) == 1) {
+            cursor.close();
+            return true;
+        } else {
+            cursor.close();
+            return false;
+        }
+    }
+
+    public boolean FindPassword(String newemail, String password){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(" SELECT * FROM "+TABLE_NAME,null);
+        Boolean result = false ;
+
+        if(cursor.getCount() == 0){
+//            Toast.makeText(context,"No data found",Toast.LENGTH_LONG).show();
+        }else {
+            while (cursor.moveToNext()){
+                    String useremail = cursor.getString(2);
+                    String userpass = cursor.getString(3);
+                    if(useremail.equals(newemail) && userpass.equals(password)){
+                        result  = true;
+                        break;
+                    }
+            }
+        }
+
+        return  result ;
+
     }
 }
